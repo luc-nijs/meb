@@ -1,0 +1,41 @@
+---
+import '../styles/site.css';
+
+interface Props { title: string; path: string }
+const { title, path } = Astro.props;
+
+const buttons = [
+  { label: 'About', href: '/about' },
+  { label: 'Episodes', href: '/episodes' },
+  { label: 'Your voice!', href: '/interactive' },
+];
+---
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{title}</title>
+    <meta name="description" content="Music Education Bites: short videos on music education, from the Bachelor in Music Education at the University of Luxembourg." />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..600;1,9..144,300..600&family=Manrope:wght@300..700&display=swap" rel="stylesheet" />
+  </head>
+  <body>
+    <header>
+      <a href="/"><img class="title-image" src="/images/meb-title.png" alt="BEM | MEB" width="1500" height="625" /></a>
+    </header>
+    <main><slot /></main>
+    <footer>
+      <nav aria-label="Main">
+        {buttons.map((b) => <a href={b.href} class={b.href === path ? 'on' : ''}>{b.label}</a>)}
+      </nav>
+      <img class="unilu" src="/images/unilu.jpg" alt="Université du Luxembourg" />
+    </footer>
+    <script is:inline>
+      var sc_project = 13363802;
+      var sc_invisible = 1;
+      var sc_security = 'b28dc660';
+    </script>
+    <script is:inline async src="https://www.statcounter.com/counter/counter.js"></script>
+  </body>
+</html>

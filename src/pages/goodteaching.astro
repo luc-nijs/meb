@@ -1,0 +1,8 @@
+---
+import Base from '../layouts/Base.astro';
+import { WORDCLOUD } from '../data/topic.js';
+---
+<Base title="Good teaching | Music Education Bites" path="/goodteaching">
+  <h1 class="topic" style="text-align:center">Good teaching</h1>
+  <iframe class="cloud" src={`${WORDCLOUD}?topic=good_teaching&form=0&heading=0`} title="Good teaching wordcloud" loading="lazy"></iframe>
+</Base>

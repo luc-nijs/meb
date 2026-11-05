@@ -1,0 +1,64 @@
+:root {
+  color-scheme: dark;
+  --head: Fraunces, Georgia, serif;
+  --body: Manrope, system-ui, sans-serif;
+  --yellow: #ffdb01;
+  --blue: #188ad2;
+  --orange: #ea8814;
+  --label: #01abdc;
+}
+* { box-sizing: border-box; }
+body { margin: 0; min-height: 100vh; display: flex; flex-direction: column; background: #000; color: #fff; font: 400 15px/1.45 var(--body); }
+main { flex: 1; width: 100%; max-width: 900px; margin: 0 auto; padding: 8px 16px 0; }
+img, video, iframe { display: block; max-width: 100%; }
+a { color: inherit; }
+p { margin: 0; }
+p + p { margin-top: 14px; }
+
+header { width: 100%; max-width: 1100px; margin: 0 auto; padding: 16px; }
+.title-image { width: 300px; height: auto; }
+
+h1 { margin: 0 0 16px; font: 400 26px/1.25 var(--head); color: var(--yellow); }
+
+/* Home */
+.intro { width: 100%; aspect-ratio: 16 / 9; max-height: 62vh; background: #000; }
+
+/* Episodes */
+.episodes { margin: 0; padding-left: 22px; font-size: 16px; }
+
+/* Your voice and Good teaching */
+.center { max-width: 460px; margin: 0 auto; text-align: center; font-size: 16px; }
+.topic { margin: 12px 0; font: 400 34px/1.25 var(--head); color: var(--yellow); }
+.center p + p { margin-top: 0; }
+.action { display: inline-flex; align-items: center; justify-content: center; gap: 10px; width: 226px; margin: 14px 0 26px; padding: 11px 14px; border-radius: 10px; color: #000; font-size: 15px; font-weight: 600; text-decoration: none; }
+.action svg { width: 18px; height: 18px; fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; }
+.action:hover { filter: brightness(1.15); }
+.action.blue { background: var(--blue); }
+.action.orange { background: var(--orange); }
+.cloud { width: 100%; height: 460px; border: 0; background: #000; }
+
+/* Contact */
+.form { display: grid; grid-template-columns: 1fr 1fr; gap: 14px 18px; max-width: 540px; margin: 0 auto; }
+.form h1 { grid-column: 1 / -1; margin: 0; color: #fff; }
+.form label { display: grid; gap: 4px; color: var(--label); font-size: 13px; }
+.form .full { grid-column: 1 / -1; }
+.form input, .form textarea { width: 100%; padding: 8px 10px; background: #fafafa; border: 0; border-bottom: 2px solid #888; border-radius: 0; color: #000; font: 400 15px var(--body); }
+.form textarea { height: 90px; resize: vertical; }
+.form button { justify-self: start; padding: 9px 36px; background: var(--label); border: 0; border-radius: 100px; color: #fff; font: 500 15px var(--body); cursor: pointer; }
+.form-note { grid-column: 1 / -1; color: var(--label); font-size: 14px; }
+
+/* Buttons and logo */
+footer { position: relative; display: flex; align-items: center; justify-content: center; width: 100%; max-width: 1100px; margin: 0 auto; padding: 24px 16px 16px; }
+footer nav { display: flex; flex-wrap: wrap; justify-content: center; gap: 12px; }
+footer nav a { width: 142px; padding: 10px 4px; background: #fff; color: #000; font-size: 13px; letter-spacing: .1em; text-align: center; text-decoration: none; }
+footer nav a:hover, footer nav a.on { background: rgba(255, 255, 255, .55); }
+.unilu { position: absolute; right: 16px; bottom: 16px; width: 77px; height: auto; }
+
+@media (max-width: 760px) {
+  .title-image { width: 220px; }
+  footer { flex-direction: column; gap: 14px; }
+  footer nav a { width: 100px; font-size: 12px; letter-spacing: .05em; }
+  .unilu { position: static; }
+  .topic { font-size: 28px; }
+  .form { grid-template-columns: 1fr; }
+}

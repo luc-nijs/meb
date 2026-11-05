@@ -1,0 +1,23 @@
+---
+import Base from '../layouts/Base.astro';
+import { topic, RECORDER, WORDCLOUD } from '../data/topic.js';
+---
+<Base title="Your voice! | Music Education Bites" path="/interactive">
+  <div class="center">
+    <p>{topic.intro}</p>
+    <h1 class="topic">{topic.label}</h1>
+    <p>{topic.question}</p>
+    <p>Tell us in a short voice or video message!</p>
+    <!-- The recorder needs its own tab: inside a frame the browser blocks the microphone. -->
+    <a class="action blue" href={RECORDER} target="_blank" rel="noopener">
+      Tell us what you think!
+      <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9.5" /><path d="M8 14.5c1 1.5 2.4 2.2 4 2.2s3-.7 4-2.2M9 9.5v.01M15 9.5v.01" /></svg>
+    </a>
+    <p>Don't feel like recording something?</p>
+    <p>No worries... You can still contribute by uploading up to 5 keywords (1 word!) into our topic word cloud...</p>
+    <a class="action orange" href={`${WORDCLOUD}?topic=${topic.slug}`} target="_blank" rel="noopener">
+      Add your keywords!
+      <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9.5" /><path d="M8 14.5c1 1.5 2.4 2.2 4 2.2s3-.7 4-2.2M9 9.5v.01M15 9.5v.01" /></svg>
+    </a>
+  </div>
+</Base>

@@ -1,0 +1,32 @@
+---
+import Base from '../layouts/Base.astro';
+---
+<Base title="Contact | Music Education Bites" path="/contact">
+  <form class="form" data-contact>
+    <h1>Contact us</h1>
+    <label>First name*<input type="text" name="first" required /></label>
+    <label>Last name<input type="text" name="last" /></label>
+    <label class="full">Email*<input type="email" name="email" required /></label>
+    <label class="full">Write a message<textarea name="message"></textarea></label>
+    <button type="submit">Submit</button>
+    <p class="form-note" data-note hidden></p>
+  </form>
+  <script>
+    const TO = 'luc.nijs@uni.lu';
+    const form = document.querySelector<HTMLFormElement>('[data-contact]');
+    const note = document.querySelector<HTMLElement>('[data-note]');
+    form?.addEventListener('submit', (event) => {
+      event.preventDefault();
+      const data = new FormData(form);
+      const name = [data.get('first'), data.get('last')].map((v) => String(v || '').trim()).filter(Boolean).join(' ');
+      const body = [`Name: ${name}`, `Email: ${data.get('email')}`, '', String(data.get('message'))].join('\n');
+      const url = `mailto:${TO}?subject=${encodeURIComponent('via MEB website')}&body=${encodeURIComponent(body)}`;
+      if (note) {
+        note.hidden = false;
+        note.innerHTML = 'Your email program should open with this message, ready to send. If it doesn’t, <a data-link>open it here</a> or write to ' + TO + '.';
+        note.querySelector('a')?.setAttribute('href', url);
+      }
+      window.location.href = url;
+    });
+  </script>
+</Base>
