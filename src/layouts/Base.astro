@@ -1,8 +1,21 @@
 ---
 import '../styles/site.css';
 
-interface Props { title: string; path: string }
-const { title, path } = Astro.props;
+interface Props { title: string; description?: string; path: string; noindex?: boolean }
+const { title, description = 'Music Education Bites: short videos on music education, from the Bachelor in Music Education at the University of Luxembourg.', path, noindex = false } = Astro.props;
+
+const site = Astro.site ?? 'https://www.musiceducationbites.lu';
+const canonical = new URL(Astro.url.pathname.replace(/\/?$/, '/'), site).href;
+const ogImage = new URL('/images/og-meb.jpg', site).href;
+const siteData = {
+  '@context': 'https://schema.org',
+  '@type': 'WebSite',
+  name: 'Music Education Bites',
+  alternateName: 'MEB',
+  url: new URL('/', site).href,
+  description: 'Short videos on questions of enduring interest to instrumental music teachers, from the Bachelor in Music Education at the University of Luxembourg.',
+  publisher: { '@type': 'CollegeOrUniversity', name: 'University of Luxembourg', url: 'https://www.uni.lu/' },
+};
 
 const buttons = [
   { label: 'About', href: '/about' },
@@ -16,7 +29,21 @@ const buttons = [
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>{title}</title>
-    <meta name="description" content="Music Education Bites: short videos on music education, from the Bachelor in Music Education at the University of Luxembourg." />
+    <meta name="description" content={description} />
+    {noindex ? <meta name="robots" content="noindex" /> : <link rel="canonical" href={canonical} />}
+    <link rel="icon" href="/favicon.png" type="image/png" />
+    <link rel="apple-touch-icon" href="/favicon.png" />
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="Music Education Bites" />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonical} />
+    <meta property="og:image" content={ogImage} />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content="A yellow music note eating dots, next to the words Music education bites: short videos on music education" />
+    <meta name="twitter:card" content="summary_large_image" />
+    {Astro.url.pathname === '/' && <script type="application/ld+json" set:html={JSON.stringify(siteData).replace(/</g, '\\u003c')} />}
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..600;1,9..144,300..600&family=Manrope:wght@300..700&display=swap" rel="stylesheet" />
   </head>
