@@ -22,6 +22,13 @@ html { scrollbar-width: thin; scrollbar-color: rgba(255, 255, 255, .3) transpare
 ::-webkit-scrollbar-track, ::-webkit-scrollbar-corner { background: transparent; }
 ::-webkit-scrollbar-thumb { background: rgba(255, 255, 255, .3); background-clip: padding-box; border: 3px solid transparent; border-radius: 100px; }
 ::-webkit-scrollbar-thumb:hover { background: rgba(255, 255, 255, .5); background-clip: padding-box; }
+/* On a wide screen the text column scrolls, not the window, so the bar stands
+   beside the text instead of at the far right edge. The window keeps the title
+   image and the buttons in place. Phones keep the ordinary page scroll. */
+@media (min-width: 761px) {
+  body { height: 100svh; overflow: hidden; }
+  main { min-height: 0; overflow-y: auto; overscroll-behavior: contain; scrollbar-gutter: stable both-edges; }
+}
 a { color: inherit; }
 p { margin: 0; }
 p + p { margin-top: 14px; }

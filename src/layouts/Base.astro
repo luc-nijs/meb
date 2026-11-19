@@ -52,7 +52,7 @@ const buttons = [
     <header>
       <a href="/"><img class="title-image" src="/images/meb-title.png" alt="BEM | MEB" width="1500" height="625" /></a>
     </header>
-    <main><slot /></main>
+    <main tabindex="0"><slot /></main>
     <footer>
       <nav aria-label="Main">
         {buttons.map((b) => <a href={b.href} class={b.href === path ? 'on' : ''}>{b.label}</a>)}
