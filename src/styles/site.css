@@ -26,6 +26,15 @@ h1 { margin: 0 0 16px; font: 400 26px/1.25 var(--head); color: var(--yellow); }
 /* Episodes */
 .episodes { margin: 0; padding-left: 22px; font-size: 16px; }
 
+/* Research */
+.research { margin-top: 22px; font-size: 16px; }
+.research section + section { margin-top: 24px; padding-top: 20px; border-top: 1px solid #262626; }
+.research h2 { margin: 0 0 8px; font: 400 21px/1.25 var(--head); color: var(--yellow); }
+.research .soon { color: #8c8c8c; font-size: 15px; font-style: italic; }
+.readings { margin: 12px 0 0; padding-left: 22px; font-size: 15px; }
+.readings li + li { margin-top: 8px; }
+.readings a { color: var(--label); }
+
 /* Your voice and Good teaching */
 .center { max-width: 460px; margin: 0 auto; text-align: center; font-size: 16px; }
 .topic { margin: 12px 0; font: 400 34px/1.25 var(--head); color: var(--yellow); }

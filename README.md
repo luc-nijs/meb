@@ -10,6 +10,7 @@ npm run dev
 - `src/pages/` – one file per page
 - `src/layouts/Base.astro` – title image, buttons and logo
 - `src/data/topic.js` – the current topic; change it here each month
+- `src/data/research.js` – the research behind each episode, shown on the Research page
 - `src/styles/site.css` – layout, fonts and colours
 - `public/` – images and the intro video
 - `_source/` – original Wix data, not published

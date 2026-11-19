@@ -1,0 +1,29 @@
+---
+import Base from '../layouts/Base.astro';
+import { research } from '../data/research.js';
+---
+<Base title="Research | Music Education Bites" description="The research behind the Music Education Bites episodes: a short summary and further reading for each Bite." path="/research">
+  <h1>The research behind the Bites</h1>
+  <p>Each Bite raises a question that researchers have been working on for some time. This page gathers, episode by episode, what that research says and where to read further. It grows with the series: an episode appears here once its Bite is out.</p>
+  <div class="research">
+    {research.map((item) => (
+      <section>
+        <h2 id={item.slug}>{item.label}</h2>
+        {item.summary.length > 0 ? (
+          <>
+            {item.summary.map((paragraph) => <p>{paragraph}</p>)}
+            {item.readings.length > 0 && (
+              <ul class="readings">
+                {item.readings.map((reading) => (
+                  <li>{reading.url ? <a href={reading.url} target="_blank" rel="noopener">{reading.text}</a> : reading.text}</li>
+                ))}
+              </ul>
+            )}
+          </>
+        ) : (
+          <p class="soon">In preparation.</p>
+        )}
+      </section>
+    ))}
+  </div>
+</Base>
