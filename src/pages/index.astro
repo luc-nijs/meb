@@ -8,19 +8,55 @@ import Base from '../layouts/Base.astro';
        while the text is being remade. -->
   <video id="intro" class="intro" src="/video/meb-intro-title.mp4" poster="/images/meb-intro-poster.jpg" controls autoplay muted preload="auto" playsinline aria-label="Music Education Bites: short videos on music education"></video>
   <script is:inline>
-    /* Chrome and Safari remember a per-site "sound on" choice and reapply it on
-       the next visit, which overrides the muted attribute. Re-assert mute while
-       the page is starting up — on load, on metadata, and on the first play.
-       After that first play the element is left alone, so the sound button in
-       the controls works normally for the rest of the visit. */
+    /* Play with sound on arrival. Browsers only allow that once a visitor has
+       some interaction history with the site; otherwise they refuse the play
+       call or pause the element the moment it is unmuted. The muted attribute
+       keeps the animation playing in that case, and the sound is turned on at
+       the visitor's first click or key press anywhere outside the player. */
     (function () {
       var v = document.getElementById('intro');
       if (!v) return;
-      var startup = true;
-      function mute() { if (startup) { v.muted = true; } }
-      mute();
-      v.addEventListener('loadedmetadata', mute);
-      v.addEventListener('play', function () { mute(); startup = false; });
+      var settled = false;
+
+      function withSound() {
+        v.muted = false;
+        var p = v.play();
+        if (p && p.catch) { p.catch(withoutSound); }
+        /* A browser that disallows this pauses us right after the unmute. */
+        setTimeout(function () {
+          if (settled) return;
+          if (v.paused || v.muted) { withoutSound(); } else { settled = true; }
+        }, 400);
+      }
+
+      function withoutSound() {
+        if (settled) return;
+        settled = true;
+        v.muted = true;
+        var p = v.play();
+        if (p && p.catch) { p.catch(function () {}); }
+        waitForGesture();
+      }
+
+      function waitForGesture() {
+        function on(e) {
+          /* Clicks on the player itself are the visitor working the controls. */
+          if (e.target === v) return;
+          off();
+          if (v.ended) { v.currentTime = 0; }
+          v.muted = false;
+          var p = v.play();
+          if (p && p.catch) { p.catch(function () {}); }
+        }
+        function off() {
+          document.removeEventListener('pointerdown', on, true);
+          document.removeEventListener('keydown', on, true);
+        }
+        document.addEventListener('pointerdown', on, true);
+        document.addEventListener('keydown', on, true);
+      }
+
+      withSound();
     })();
   </script>
 </Base>
