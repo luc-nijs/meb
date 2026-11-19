@@ -21,6 +21,8 @@ header { width: 100%; max-width: 1100px; margin: 0 auto; padding: 16px; }
 .title-image { width: 300px; height: auto; }
 
 h1 { margin: 0 0 16px; font: 400 26px/1.25 var(--head); color: var(--yellow); }
+/* Section heading inside a page: same look as h1, with space above. */
+h2 { margin: 30px 0 16px; font: 400 26px/1.25 var(--head); color: var(--yellow); }
 
 /* Home: the video takes the height left over, never more. */
 .intro { width: min(100%, calc((100vh - var(--chrome)) * 16 / 9)); width: min(100%, calc((100svh - var(--chrome)) * 16 / 9)); aspect-ratio: 16 / 9; margin: 0 auto; background: #000; }
