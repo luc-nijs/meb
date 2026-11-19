@@ -2,5 +2,47 @@
 import Base from '../layouts/Base.astro';
 ---
 <Base title="Music Education Bites | Short Videos on Music Education" description="Music Education Bites: short videos on questions of enduring interest to instrumental music teachers, from the University of Luxembourg." path="/">
-  <video class="intro" src="/video/meb-intro.mp4" poster="/images/meb-intro-poster.jpg" controls autoplay muted preload="auto" playsinline aria-label="Music Education Bites: short videos on music education"></video>
+  <video id="intro" class="intro" src="/video/meb-intro.mp4" poster="/images/meb-intro-poster.jpg" controls autoplay muted preload="auto" playsinline aria-label="Music Education Bites: short videos on music education"></video>
+  <script is:inline>
+    /* Autoplay shows the animated title only: pause in the silence just before
+       the spoken part begins (speech onset 12.65 s). Pressing play again lifts
+       the stop, so the full video stays available. */
+    (function () {
+      var v = document.getElementById('intro');
+      if (!v) return;
+      var STOP_AT = 12.35;
+      var armed = true;      /* guard applies to the first playback only */
+      var watching = false;
+      var forceMute = true;  /* force silence until the visitor unmutes */
+
+      /* Some browsers restore a per-site unmuted state, which overrides the
+         muted attribute. Re-assert mute on load and on the first play; after
+         that the visitor's own sound button is left alone. */
+      function mute() { if (forceMute) { v.muted = true; } }
+      mute();
+      v.addEventListener('loadedmetadata', mute);
+      v.addEventListener('play', mute);
+      v.addEventListener('volumechange', function () {
+        if (!v.muted) forceMute = false;   /* visitor turned sound on */
+      });
+      function watch() {
+        if (!armed) { watching = false; return; }
+        if (v.ended) { armed = false; watching = false; return; }
+        if (!v.paused && v.currentTime >= STOP_AT) {
+          armed = false;
+          watching = false;
+          v.pause();
+          v.currentTime = STOP_AT;
+          return;
+        }
+        requestAnimationFrame(watch);
+      }
+      function arm() {
+        if (!armed) return;
+        if (!watching) { watching = true; requestAnimationFrame(watch); }
+      }
+      v.addEventListener('play', arm);
+      if (!v.paused) arm();
+    })();
+  </script>
 </Base>
