@@ -8,7 +8,9 @@
   --label: #01abdc;
 }
 * { box-sizing: border-box; }
-body { margin: 0; min-height: 100vh; display: flex; flex-direction: column; background: #000; color: #fff; font: 400 15px/1.45 var(--body); }
+/* --chrome: the vertical space the title image and the buttons take, so the
+   home video can be sized to what is left and never push the buttons off. */
+body { --chrome: 262px; margin: 0; min-height: 100vh; min-height: 100svh; display: flex; flex-direction: column; background: #000; color: #fff; font: 400 15px/1.45 var(--body); }
 main { flex: 1; width: 100%; max-width: 900px; margin: 0 auto; padding: 8px 16px 0; }
 img, video, iframe { display: block; max-width: 100%; }
 a { color: inherit; }
@@ -20,8 +22,8 @@ header { width: 100%; max-width: 1100px; margin: 0 auto; padding: 16px; }
 
 h1 { margin: 0 0 16px; font: 400 26px/1.25 var(--head); color: var(--yellow); }
 
-/* Home */
-.intro { width: 100%; aspect-ratio: 16 / 9; max-height: 62vh; background: #000; }
+/* Home: the video takes the height left over, never more. */
+.intro { width: min(100%, calc((100vh - var(--chrome)) * 16 / 9)); width: min(100%, calc((100svh - var(--chrome)) * 16 / 9)); aspect-ratio: 16 / 9; margin: 0 auto; background: #000; }
 
 /* Episodes */
 .episodes { margin: 0; padding-left: 22px; font-size: 16px; }
@@ -44,7 +46,7 @@ h1 { margin: 0 0 16px; font: 400 26px/1.25 var(--head); color: var(--yellow); }
 .action:hover { filter: brightness(1.15); }
 .action.blue { background: var(--blue); }
 .action.orange { background: var(--orange); }
-.cloud { width: 100%; height: 460px; border: 0; background: #000; }
+.cloud { width: 100%; height: min(460px, calc(100vh - var(--chrome) - 60px)); height: min(460px, calc(100svh - var(--chrome) - 60px)); min-height: 300px; border: 0; background: #000; }
 
 /* Contact */
 .form { display: grid; grid-template-columns: 1fr 1fr; gap: 14px 18px; max-width: 540px; margin: 0 auto; }
@@ -57,13 +59,17 @@ h1 { margin: 0 0 16px; font: 400 26px/1.25 var(--head); color: var(--yellow); }
 .form-note { grid-column: 1 / -1; color: var(--label); font-size: 14px; }
 
 /* Buttons and logo */
-footer { position: relative; display: flex; align-items: center; justify-content: center; width: 100%; max-width: 1100px; margin: 0 auto; padding: 24px 16px 16px; }
+/* Sticky: on a short screen, or on a long page, the buttons stay at the
+   bottom edge of the window instead of waiting below the fold. */
+footer { position: sticky; bottom: 0; z-index: 5; background: #000; display: flex; align-items: center; justify-content: center; width: 100%; max-width: 1100px; margin: 0 auto; padding: 24px 16px 24px; padding-bottom: calc(24px + env(safe-area-inset-bottom)); }
 footer nav { display: flex; flex-wrap: wrap; justify-content: center; gap: 12px; }
 footer nav a { width: 142px; padding: 10px 4px; background: #fff; color: #000; font-size: 13px; letter-spacing: .1em; text-align: center; text-decoration: none; }
 footer nav a:hover, footer nav a.on { background: rgba(255, 255, 255, .55); }
-.unilu { position: absolute; right: 16px; bottom: 16px; width: 77px; height: auto; }
+footer::before { content: ''; position: absolute; left: 0; right: 0; bottom: 100%; height: 28px; background: linear-gradient(to top, #000, transparent); pointer-events: none; }
+.unilu { position: absolute; right: 16px; bottom: 24px; bottom: calc(24px + env(safe-area-inset-bottom)); width: 77px; height: auto; }
 
 @media (max-width: 760px) {
+  body { --chrome: 332px; }
   .title-image { width: 220px; }
   footer { flex-direction: column; gap: 14px; }
   footer nav a { width: 100px; font-size: 12px; letter-spacing: .05em; }
